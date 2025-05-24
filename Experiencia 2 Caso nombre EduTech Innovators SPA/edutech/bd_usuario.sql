@@ -1,1 +1,0 @@
-SELECT * FROM bd_usuario.usuario;
