@@ -19,6 +19,7 @@ public class CursoController {
     public CursoController(CursoService cursoService) {
         this.cursoService = cursoService;
     }
+    
 
     @GetMapping
     public List<Curso> listar() {
