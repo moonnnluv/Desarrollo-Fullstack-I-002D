@@ -4,6 +4,7 @@ package com.edutech.usuarios.controller;
 import com.edutech.usuarios.entity.Usuario;
 import com.edutech.usuarios.service.UsuarioService;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -20,6 +21,13 @@ public class UsuarioController {
     @GetMapping
     public List<Usuario> listarUsuarios() {
         return usuarioService.obtenerTodos();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Usuario> findById(@PathVariable Long id) {
+        return usuarioService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
