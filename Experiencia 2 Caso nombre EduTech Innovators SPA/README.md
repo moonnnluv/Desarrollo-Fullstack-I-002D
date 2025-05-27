@@ -1,6 +1,6 @@
 # EduTech Innovators SPA
 
-Repositorio del proyecto de microservicios de la empresa ficticia EduTech Innovators SPA. Desarrollo Fullstack I - Duoc UC.
+Repositorio del proyecto de microservicios de la empresa ficticia EduTech Innovators SPA creado por Alejandra Reyes y Benjamín Torrejón para la asignatura Desarrollo Fullstack I - Duoc UC con la profesora Mariangeles Robinson.
 
 ## Descripción del proyecto
 
