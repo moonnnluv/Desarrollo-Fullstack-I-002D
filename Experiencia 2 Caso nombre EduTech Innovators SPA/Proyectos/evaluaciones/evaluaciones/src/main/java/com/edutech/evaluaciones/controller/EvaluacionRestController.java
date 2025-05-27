@@ -1,24 +1,20 @@
 package com.edutech.evaluaciones.controller;
 
-import com.edutech.evaluaciones.entity.Evaluacion;
+import com.edutech.evaluaciones.model.Evaluacion;
 import com.edutech.evaluaciones.service.EvaluacionService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/evaluaciones") // RUTA BASE
+@RequestMapping("/api/evaluaciones")
 @CrossOrigin(origins = "*") // Para permitir llamadas desde frontend externo
 public class EvaluacionRestController {
 
     @Autowired
     private EvaluacionService evaluacionService;
-
-    public EvaluacionRestController(EvaluacionService evaluacionService) {
-        this.evaluacionService = evaluacionService;
-    }
 
     @GetMapping
     public List<Evaluacion> listar() {

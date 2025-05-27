@@ -9,14 +9,12 @@ public class Evaluacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // ATRIBUTOS
     private String nombre;
     private String curso;
     private double nota;
     private int ponderacion;
     private String estudiante;
 
-    // CONSTRUCTOR
     public Evaluacion() {
     }
 
@@ -28,7 +26,6 @@ public class Evaluacion {
         this.estudiante = estudiante;
     }
 
-    // GETTER Y SETTER
     public Long getId() {
         return id;
     }
