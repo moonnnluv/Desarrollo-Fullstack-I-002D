@@ -1,19 +1,15 @@
 package com.edutech.usuarios.controller;
 
-// IMPORTACION DE CLASE USUARIO Y SERVICE CORRESPONDIENTE
 import com.edutech.usuarios.entity.Usuario;
 import com.edutech.usuarios.service.UsuarioService;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/usuarios") // RUTA BASE
+@RequestMapping("/api/usuarios")
 public class UsuarioController {
 
-    @Autowired
     private final UsuarioService usuarioService;
 
     public UsuarioController(UsuarioService usuarioService) {
@@ -23,13 +19,6 @@ public class UsuarioController {
     @GetMapping
     public List<Usuario> listarUsuarios() {
         return usuarioService.obtenerTodos();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Usuario> findById(@PathVariable Long id) {
-        return usuarioService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
