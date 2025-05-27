@@ -1,11 +1,15 @@
 package com.edutech.evaluaciones.service;
 
+// IMPORTAMOS CLASE EVALUACION Y REPOSITORIO CORRESPONDIENTE
 import com.edutech.evaluaciones.model.Evaluacion;
 import com.edutech.evaluaciones.repository.EvaluacionRepository;
+
+// SPRING
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+// JAVA LIST Y OPTIONAL
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +18,10 @@ public class EvaluacionServiceImpl implements EvaluacionService {
 
     @Autowired
     private EvaluacionRepository evaluacionRepository;
+
+    public EvaluacionServiceImpl(EvaluacionRepository evaluacionRepository) {
+        this.evaluacionRepository = evaluacionRepository;
+    }
 
     @Override
     @Transactional(readOnly = true)

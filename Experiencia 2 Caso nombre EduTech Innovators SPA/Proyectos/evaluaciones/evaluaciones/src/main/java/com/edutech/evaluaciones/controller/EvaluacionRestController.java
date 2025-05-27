@@ -1,15 +1,16 @@
 package com.edutech.evaluaciones.controller;
 
+// IMPORTACION DE CLASE EVALUACION Y SERVICE CORRESPONDIENTE
 import com.edutech.evaluaciones.model.Evaluacion;
 import com.edutech.evaluaciones.service.EvaluacionService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/evaluaciones")
+@RequestMapping("/api/evaluaciones") // RUTA BASE
 @CrossOrigin(origins = "*") // Para permitir llamadas desde frontend externo
 public class EvaluacionRestController {
 

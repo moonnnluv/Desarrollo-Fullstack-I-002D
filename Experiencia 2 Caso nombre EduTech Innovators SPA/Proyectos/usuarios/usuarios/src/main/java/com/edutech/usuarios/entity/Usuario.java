@@ -10,11 +10,24 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // ATRIBUTOS
     private String nombre;
     private String email;
     private String rol;
 
+    
+    // CONSTRUCTOR
+    public Usuario() {
+    }
 
+    public Usuario(Long id, String nombre, String email, String rol) {
+        this.id = id;
+        this.nombre = nombre;
+        this.email = email;
+        this.rol = rol;
+    }
+
+    // GETTER Y SETTER
     public Long getId() {
         return id;
     }

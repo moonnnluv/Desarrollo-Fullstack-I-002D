@@ -1,13 +1,14 @@
 package com.edutech.usuarios.controller;
 
+// IMPORTACION DE CLASE USUARIO Y SERVICE CORRESPONDIENTE
 import com.edutech.usuarios.entity.Usuario;
 import com.edutech.usuarios.service.UsuarioService;
-import org.springframework.web.bind.annotation.*;
 
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/usuarios")
+@RequestMapping("/api/usuarios") // RUTA BASE
 public class UsuarioController {
 
     private final UsuarioService usuarioService;

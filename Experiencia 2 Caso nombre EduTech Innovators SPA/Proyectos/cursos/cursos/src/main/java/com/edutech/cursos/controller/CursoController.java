@@ -1,5 +1,6 @@
 package com.edutech.cursos.controller;
 
+// IMPORTACION DE CLASE CURSO Y SERVICE CORRESPONDIENTE
 import com.edutech.cursos.entity.Curso;
 import com.edutech.cursos.service.CursoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/cursos")
+@RequestMapping("/api/cursos") // RUTA BASE
 public class CursoController {
 
     @Autowired

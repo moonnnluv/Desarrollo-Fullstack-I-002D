@@ -1,19 +1,28 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f2f2f2;
     margin: 0;
     padding: 0;
     text-align: center;
+    color: #333;
 }
 
 header {
-    background-color: #005b96;
+    background-color: #005792;
     color: white;
-    padding: 20px 0;
+    padding: 20px;
+    text-align: center;
 }
 
 main {
-    padding: 40px 20px;
+    padding: 30px;
+    text-align: center;
+}
+
+.banner-img {
+    max-width: 100%;
+    height: auto;
+    margin: 20px 0;
 }
 
 h1, h2, h3 {
@@ -27,22 +36,22 @@ img {
 }
 
 table {
-    margin: 30px auto;
+     margin: 0 auto;
     border-collapse: collapse;
     width: 80%;
-    max-width: 900px;
     background-color: white;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 table thead {
-    background-color: #005b96;
+    background-color: #005792;
     color: white;
 }
 
 table th, table td {
-    padding: 12px 15px;
+    padding: 12px;
     border: 1px solid #ddd;
+    text-align: center;
 }
 
 table tbody tr:nth-child(even) {
