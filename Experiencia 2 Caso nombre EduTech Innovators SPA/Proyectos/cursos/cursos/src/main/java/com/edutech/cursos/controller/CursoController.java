@@ -16,6 +16,10 @@ public class CursoController {
     @Autowired
     private CursoService cursoService;
 
+    public CursoController(CursoService cursoService) {
+        this.cursoService = cursoService;
+    }
+
     @GetMapping
     public List<Curso> listar() {
         return cursoService.findAll();

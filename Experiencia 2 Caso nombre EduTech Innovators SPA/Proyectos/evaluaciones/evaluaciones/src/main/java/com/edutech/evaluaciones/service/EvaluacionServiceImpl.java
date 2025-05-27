@@ -1,7 +1,6 @@
 package com.edutech.evaluaciones.service;
 
-// IMPORTAMOS CLASE EVALUACION Y REPOSITORIO CORRESPONDIENTE
-import com.edutech.evaluaciones.model.Evaluacion;
+import com.edutech.evaluaciones.entity.Evaluacion;
 import com.edutech.evaluaciones.repository.EvaluacionRepository;
 
 // SPRING

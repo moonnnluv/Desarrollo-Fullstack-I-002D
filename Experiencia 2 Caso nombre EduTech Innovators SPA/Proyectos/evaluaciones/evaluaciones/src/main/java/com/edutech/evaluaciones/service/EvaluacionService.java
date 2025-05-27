@@ -1,9 +1,9 @@
 package com.edutech.evaluaciones.service;
 
-// IMPORTACION DE CLASE EVALUACION, JAVA LIST Y OPTIONAL
-import com.edutech.evaluaciones.model.Evaluacion;
 import java.util.List;
 import java.util.Optional;
+
+import com.edutech.evaluaciones.entity.Evaluacion;
 
 public interface EvaluacionService {
     List<Evaluacion> listar(); // OBTIENE TODOS

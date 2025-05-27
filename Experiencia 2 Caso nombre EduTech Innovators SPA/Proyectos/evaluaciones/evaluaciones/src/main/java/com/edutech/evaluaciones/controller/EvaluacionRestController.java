@@ -1,7 +1,6 @@
 package com.edutech.evaluaciones.controller;
 
-// IMPORTACION DE CLASE EVALUACION Y SERVICE CORRESPONDIENTE
-import com.edutech.evaluaciones.model.Evaluacion;
+import com.edutech.evaluaciones.entity.Evaluacion;
 import com.edutech.evaluaciones.service.EvaluacionService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,10 @@ public class EvaluacionRestController {
 
     @Autowired
     private EvaluacionService evaluacionService;
+
+    public EvaluacionRestController(EvaluacionService evaluacionService) {
+        this.evaluacionService = evaluacionService;
+    }
 
     @GetMapping
     public List<Evaluacion> listar() {

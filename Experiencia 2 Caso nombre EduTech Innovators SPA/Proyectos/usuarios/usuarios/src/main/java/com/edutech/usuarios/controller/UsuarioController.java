@@ -4,6 +4,7 @@ package com.edutech.usuarios.controller;
 import com.edutech.usuarios.entity.Usuario;
 import com.edutech.usuarios.service.UsuarioService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @RequestMapping("/api/usuarios") // RUTA BASE
 public class UsuarioController {
 
+    @Autowired
     private final UsuarioService usuarioService;
 
     public UsuarioController(UsuarioService usuarioService) {
