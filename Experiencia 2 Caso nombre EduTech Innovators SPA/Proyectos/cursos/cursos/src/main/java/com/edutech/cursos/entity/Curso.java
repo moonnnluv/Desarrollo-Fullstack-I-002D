@@ -10,13 +10,11 @@ public class Curso {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // ATRIBUTOS
     private String nombre;
     private String descripcion;
     private String instructor;
     private int duracion;
 
-    // CONSTRUCTOR
     public Curso() {}
 
     public Curso(String nombre, String descripcion, String instructor, int duracion) {
@@ -25,8 +23,7 @@ public class Curso {
         this.instructor = instructor;
         this.duracion = duracion;
     }
-    
-    // GETTER Y SETTER
+
     public Long getId() { return id; }
     public String getNombre() { return nombre; }
     public String getDescripcion() { return descripcion; }
