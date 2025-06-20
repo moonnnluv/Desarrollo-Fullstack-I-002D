@@ -18,7 +18,7 @@ public class Soporte {
 
     private Long usuarioId;       
     private String descripcion;  
-    private String estado;        
+    private String estado;        // ABIERTO, EN PROGRESO, CERRADO
     private LocalDateTime fechaCreacion;
 
     public Soporte(Long id, Long usuarioId, String descripcion, String estado, LocalDateTime fechaCreacion) {

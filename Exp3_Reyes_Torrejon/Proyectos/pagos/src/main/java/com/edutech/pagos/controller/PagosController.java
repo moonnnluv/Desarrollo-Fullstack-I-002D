@@ -25,11 +25,12 @@ public class PagosController {
         this.service = service;
     }
 
+
     // CREAR UN PAGO
     @PostMapping
     public ResponseEntity<Pago> registrarPago(@RequestBody Pago pago) {
-        Pago nuevoPago = service.save(pago); // Llama al servicio para guardar el pago
-        return ResponseEntity.ok(nuevoPago); // Retorna el pago guardado
+        Pago nuevoPago = service.save(pago); 
+        return ResponseEntity.ok(nuevoPago); 
     }
 
     // MUESTRA TODOS LOS PAGOS
