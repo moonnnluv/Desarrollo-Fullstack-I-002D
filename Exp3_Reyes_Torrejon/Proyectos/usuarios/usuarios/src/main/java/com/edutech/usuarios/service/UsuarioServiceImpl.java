@@ -1,10 +1,12 @@
 package com.edutech.usuarios.service;
 
-import com.edutech.usuarios.entity.Usuario;
-import com.edutech.usuarios.repository.UsuarioRepository;
+import java.util.List;
+import java.util.NoSuchElementException;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.edutech.usuarios.entity.Usuario;
+import com.edutech.usuarios.repository.UsuarioRepository;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
@@ -18,6 +20,12 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public List<Usuario> obtenerTodos() {
         return usuarioRepository.findAll();
+    }
+
+    @Override
+    public Usuario obtenerPorId(Long id) {
+        return usuarioRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Usuario no encontrado con ID: " + id));
     }
 
     @Override
