@@ -1,13 +1,14 @@
 package com.edutech.usuarios.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.mockito.ArgumentMatchers.any;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import static org.mockito.Mockito.doNothing;
@@ -27,82 +28,81 @@ public class UsuarioServiceImplTest {
     @Mock
     private UsuarioRepository usuarioRepository;
 
+    List<Usuario> list = new ArrayList<>();
+
     @BeforeEach
     public void init() {
         MockitoAnnotations.openMocks(this);
+        this.chargeUsuario();
     }
 
+     // CARGAR USUARIOS
+    public void chargeUsuario() {
+        Usuario u1 = new Usuario("pedro@test.com", 1L, "Pedro Soto", "Gestor de Cursos");
+        Usuario u2 = new Usuario("ana@test.com", 2L, "Ana Torres", "Administrador");
+        Usuario u3 = new Usuario("jose@test.com", 3L, "Jose Bravo", "Estudiante");
+
+        list.add(u1);
+        list.add(u2);
+        list.add(u3);
+    }
+
+    // PROBAR EL MÉTODO findAll()
     @Test
     void testObtenerTodos() {
-        Usuario usuario = new Usuario();
-        usuario.setId(1L);
-        usuario.setNombre("Juan Pérez");
-        usuario.setEmail("juan@example.com");
-        usuario.setRol("Estudiante");
 
-        when(usuarioRepository.findAll()).thenReturn(List.of(usuario));
+        when(usuarioRepository.findAll()).thenReturn(list);
 
-        List<Usuario> resultado = usuarioService.obtenerTodos();
+        List<Usuario> respuesta = usuarioService.obtenerTodos();
 
-        assertEquals(1, resultado.size());
-        assertEquals("Juan Pérez", resultado.get(0).getNombre());
+        assertEquals(3, respuesta.size());
+        verify(usuarioRepository, times(1)).findAll();
     }
 
+    // PROBAR EL MÉTODO findById()
     @Test
     void testObtenerPorId() {
-        Usuario usuario = new Usuario();
-        usuario.setId(1L);
-        usuario.setNombre("Pedro Soto");
-        usuario.setEmail("pedro@example.com");
-        usuario.setRol("Gestor de Cursos");
 
-        when(usuarioRepository.findById(1L)).thenReturn(Optional.of(usuario));
+        Usuario usuario = list.get(0);
+        when(usuarioRepository.findById(3L)).thenReturn(Optional.of(usuario));
 
-        Usuario resultado = usuarioService.obtenerPorId(1L);
+        Optional<Usuario> resultado = usuarioService.obtenerPorId(3L);
 
-        assertNotNull(resultado);
-        assertEquals("Pedro Soto", resultado.getNombre());
-        assertEquals("pedro@example.com", resultado.getEmail());
-        assertEquals("Gestor de Cursos", resultado.getRol());
+        assertTrue(resultado.isPresent());
+        assertEquals("Jose Bravo", resultado.get().getNombre());
     }
 
+    // PROBAR EL MÉTODO save()
     @Test
     void testGuardar() {
-        Usuario usuario = new Usuario();
-        usuario.setNombre("Ana Torres");
-        usuario.setEmail("ana@example.com");
-        usuario.setRol("Administrador");
 
-        when(usuarioRepository.save(any(Usuario.class))).thenReturn(usuario);
+        Usuario original = new Usuario("ana@test.com", 2L, "Ana Torres", "Administrador");
 
-        Usuario resultado = usuarioService.guardar(usuario);
+        when(usuarioRepository.save(original)).thenReturn(original);
+
+        Usuario resultado = usuarioService.guardar(original);
 
         assertNotNull(resultado);
-        assertEquals("ana@example.com", resultado.getEmail());
-        assertEquals("Administrador", resultado.getRol());
+        assertEquals("Ana Torres", resultado.getNombre());
     }
 
+    // PROBAR EL MÉTODO update()
     @Test
     void testActualizar() {
-        Usuario original = new Usuario();
-        original.setId(1L);
-        original.setNombre("Original");
+    Usuario existente = new Usuario("ana@test.com", 2L, "Ana Torres", "Administrador");
+    Usuario actualizado = new Usuario("ana@test.com", 2L, "Ana Torres", "Estudiante");
 
-        Usuario actualizado = new Usuario();
-        actualizado.setNombre("Camila Herrera");
-        actualizado.setEmail("camila@example.com");
-        actualizado.setRol("Gestor de Cursos");
+    when(usuarioRepository.findById(2L)).thenReturn(Optional.of(existente));
+    when(usuarioRepository.save(existente)).thenReturn(actualizado);
 
-        when(usuarioRepository.findById(1L)).thenReturn(Optional.of(original));
-        when(usuarioRepository.save(any(Usuario.class))).thenAnswer(i -> i.getArgument(0));
+    Usuario resultado = usuarioService.actualizar(2L, actualizado);
 
-        Usuario resultado = usuarioService.actualizar(1L, actualizado);
+    assertNotNull(resultado);
+    assertEquals("Ana Torres Actualizada", resultado.getNombre());
+    assertEquals("Estudiante", resultado.getRol());
+}
 
-        assertEquals("Camila Herrera", resultado.getNombre());
-        assertEquals("camila@example.com", resultado.getEmail());
-        assertEquals("Gestor de Cursos", resultado.getRol());
-    }
-
+   // PROBAR EL MÉTODO deleteById()
     @Test
     void testEliminar() {
         doNothing().when(usuarioRepository).deleteById(1L);

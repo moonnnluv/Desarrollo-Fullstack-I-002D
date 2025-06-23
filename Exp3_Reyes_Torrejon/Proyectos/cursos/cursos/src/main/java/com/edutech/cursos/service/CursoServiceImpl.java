@@ -15,6 +15,10 @@ public class CursoServiceImpl implements CursoService {
     @Autowired
     private CursoRepository cursoRepository;
 
+    public CursoServiceImpl(CursoRepository cursoRepository) {
+        this.cursoRepository = cursoRepository;
+    }
+
     @Override
     @Transactional(readOnly = true)
     public List<Curso> findAll() {

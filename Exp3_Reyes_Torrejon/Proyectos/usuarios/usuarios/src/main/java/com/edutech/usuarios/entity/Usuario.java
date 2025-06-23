@@ -1,6 +1,10 @@
 package com.edutech.usuarios.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "usuarios")
@@ -13,6 +17,16 @@ public class Usuario {
     private String nombre;
     private String email;
     private String rol;
+
+    public Usuario(String email, Long id, String nombre, String rol) {
+        this.email = email;
+        this.id = id;
+        this.nombre = nombre;
+        this.rol = rol;
+    }
+
+    public Usuario() {
+    }
 
 
     public Long getId() {

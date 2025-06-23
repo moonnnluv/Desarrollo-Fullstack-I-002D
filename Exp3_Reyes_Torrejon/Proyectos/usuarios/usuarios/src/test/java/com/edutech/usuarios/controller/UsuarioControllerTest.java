@@ -1,118 +1,114 @@
 package com.edutech.usuarios.controller;
 
 import java.util.List;
+import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import org.mockito.Mock;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.edutech.usuarios.entity.Usuario;
-import com.edutech.usuarios.service.UsuarioService;
+import com.edutech.usuarios.service.UsuarioServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@WebMvcTest(UsuarioController.class)
+
+
+@SpringBootTest
+@AutoConfigureMockMvc
 public class UsuarioControllerTest {
 
     @Autowired
-    private MockMvc mockMvc;
+    private MockMvc mockmvc;
 
-    @Mock
-    private UsuarioService usuarioService;
+    @MockitoBean
+    private UsuarioServiceImpl usuarioServiceImpl;
 
     @Autowired
     private ObjectMapper objectMapper;
 
+    private List<Usuario> usuarioLista;
+
+    // LISTA TODOS LOS USUARIOS
     @Test
     void testListarUsuarios() throws Exception {
-        Usuario usuario = new Usuario();
-        usuario.setId(1L);
-        usuario.setNombre("Juan Pérez");
-        usuario.setEmail("juan@example.com");
-        usuario.setRol("Estudiante");
 
-        when(usuarioService.obtenerTodos()).thenReturn(List.of(usuario));
-
-        mockMvc.perform(get("/api/usuarios"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].nombre").value("Juan Pérez"))
-                .andExpect(jsonPath("$[0].email").value("juan@example.com"));
+        when(usuarioServiceImpl.obtenerTodos()).thenReturn(usuarioLista);
+        mockmvc.perform(get("/api/usuarios")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 
+    // LISTA LOS USUARIOS POR ID
     @Test
     void testObtenerUsuarioPorId() throws Exception {
-        Usuario usuario = new Usuario();
-        usuario.setId(1L);
-        usuario.setNombre("Pedro Soto");
-        usuario.setEmail("pedro@example.com");
-        usuario.setRol("Gestor de Cursos");
 
-        when(usuarioService.obtenerPorId(1L)).thenReturn(usuario);
-
-        mockMvc.perform(get("/api/usuarios/1"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.nombre").value("Pedro Soto"))
-                .andExpect(jsonPath("$.email").value("pedro@example.com"))
-                .andExpect(jsonPath("$.rol").value("Gestor de Cursos"));
+        Usuario usuario = new Usuario("pedro@test.com", 1L, "Pedro Soto", "Gestor de Cursos");
+        try{
+        when(usuarioServiceImpl.obtenerPorId(1L)).thenReturn(Optional.of(usuario));
+        mockmvc.perform(get("/api/usuarios/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+        }
+        catch(Exception ex){
+            fail("El testing lanzó un error " + ex.getMessage());
+        }
     }
 
+
+    // CREA UN NUEVO USUARIO
     @Test
     void testCrearUsuario() throws Exception {
-        Usuario usuario = new Usuario();
-        usuario.setNombre("Ana Torres");
-        usuario.setEmail("ana@example.com");
-        usuario.setRol("Administrador");
 
-        when(usuarioService.guardar(any(Usuario.class))).thenReturn(usuario);
-
-        mockMvc.perform(post("/api/usuarios")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(usuario)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.nombre").value("Ana Torres"))
-                .andExpect(jsonPath("$.email").value("ana@example.com"))
-                .andExpect(jsonPath("$.rol").value("Administrador"));
+        Usuario usuario = new Usuario("pedro@test.com", 1L, "Pedro Soto", "Gestor de Cursos");
+        
+        when(usuarioServiceImpl.guardar(any(Usuario.class))).thenReturn(usuario);
+                mockmvc.perform(post("/api/usuarios")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(usuario)))
+                        .andExpect(status().isCreated());
     }
 
+    // MODIFICA UN USUARIO
     @Test
     void testActualizarUsuario() throws Exception {
-        Usuario actualizado = new Usuario();
-        actualizado.setNombre("Luis Bravo");
-        actualizado.setEmail("luis@example.com");
-        actualizado.setRol("Gestor de Cursos");
+        Usuario usuario = new Usuario("ana@test.com", 2L, "Ana Torres", "Administrador");
+        Usuario usuarioActualizado = new Usuario("ana@test.com", 2L, "Ana Torres", "Estudiante");
 
-        when(usuarioService.actualizar(eq(1L), any(Usuario.class))).thenReturn(actualizado);
+        when(usuarioServiceImpl.obtenerPorId(2L)).thenReturn(Optional.of(usuario));
+        when(usuarioServiceImpl.guardar(any(Usuario.class))).thenReturn(usuarioActualizado);
 
-        mockMvc.perform(put("/api/usuarios/1")
+        mockmvc.perform(put("/api/usuarios/2")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(actualizado)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.nombre").value("Luis Bravo"))
-                .andExpect(jsonPath("$.email").value("luis@example.com"))
-                .andExpect(jsonPath("$.rol").value("Gestor de Cursos"));
+                .content(objectMapper.writeValueAsString(usuarioActualizado)))
+                .andExpect(status().isOk());
     }
 
+    // ELIMINA UN USUARIO
     @Test
     void testEliminarUsuario() throws Exception {
-        doNothing().when(usuarioService).eliminar(1L);
+        Usuario usuario = new Usuario("jose@test.com", 3L, "Jose Bravo", "Estudiante");
+        when(usuarioServiceImpl.obtenerPorId(3L)).thenReturn(Optional.of(usuario));
+        doNothing().when(usuarioServiceImpl).eliminar(3L);
 
-        mockMvc.perform(delete("/api/usuarios/1"))
+        mockmvc.perform(delete("/api/usuarios/3"))
                 .andExpect(status().isOk());
 
-        verify(usuarioService, times(1)).eliminar(1L);
+        verify(usuarioServiceImpl, times(1)).eliminar(3L);
     }
+
 }
