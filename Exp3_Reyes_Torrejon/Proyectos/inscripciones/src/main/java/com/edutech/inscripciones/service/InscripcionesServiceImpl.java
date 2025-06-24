@@ -1,34 +1,56 @@
 package com.edutech.inscripciones.service;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.edutech.inscripciones.entity.Inscripciones;
 import com.edutech.inscripciones.repository.InscripcionesRepository;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.util.List;
 
 @Service
 public class InscripcionesServiceImpl implements InscripcionesService {
 
-    private final InscripcionesRepository repository;
+    @Autowired
+    private final InscripcionesRepository inscripcionesRepository;
 
-    public InscripcionesServiceImpl(InscripcionesRepository repository) {
-        this.repository = repository;
+    public InscripcionesServiceImpl(InscripcionesRepository inscripcionesRepository) {
+        this.inscripcionesRepository = inscripcionesRepository;
     }
 
     @Override
-    public Inscripciones crear(Inscripciones inscripcion) {
-        inscripcion.setFechaInscripcion(LocalDate.now());
-        return repository.save(inscripcion);
-    }
-
-    @Override
+    @Transactional(readOnly = true)
     public List<Inscripciones> obtenerTodas() {
-        return repository.findAll();
+        return inscripcionesRepository.findAll();
     }
 
     @Override
-    public List<Inscripciones> obtenerPorUsuario(Long usuarioId) {
-        return repository.findByUsuarioId(usuarioId);
+    @Transactional(readOnly = true)
+    public Optional<Inscripciones> obtenerPorId(Long id) {
+        return inscripcionesRepository.findById(id);
+    }
+
+    @Override
+    @Transactional
+    public Inscripciones guardar(Inscripciones inscripcion) {
+        return inscripcionesRepository.save(inscripcion);
+    }
+
+    @Override
+    @Transactional
+    public Inscripciones actualizar(Long id, Inscripciones inscripcionActualizada) {
+        Inscripciones inscripcion = inscripcionesRepository.findById(id).orElseThrow();
+        inscripcion.setUsuarioId(inscripcionActualizada.getUsuarioId());
+        inscripcion.setCursoId(inscripcionActualizada.getCursoId());
+        inscripcion.setFechaInscripcion(inscripcionActualizada.getFechaInscripcion());
+        return inscripcionesRepository.save(inscripcion);
+    }
+
+    @Override
+    @Transactional
+    public void eliminar(Long id) {
+        inscripcionesRepository.deleteById(id);
     }
 }
