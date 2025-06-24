@@ -1,19 +1,20 @@
 package com.edutech.cursos.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
 
 import com.edutech.cursos.entity.Curso;
@@ -66,7 +67,7 @@ public class CursoServiceImplTest {
         Optional<Curso> resultado = service.findById(1L);
 
         assertTrue(resultado.isPresent());
-        assertEquals("Java Básico", resultado.get().getNombre());
+        assertEquals("Curso de Java", resultado.get().getNombre());
     }
 
     // PROBAR EL MÉTODO save()
