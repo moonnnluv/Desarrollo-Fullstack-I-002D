@@ -1,15 +1,14 @@
 package com.edutech.soporte.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.edutech.soporte.entity.Soporte;
 
-public interface SoporteService {
+public interface SoporteService {  
+    List<Soporte> obtenerTodos();
     Soporte crearTicket(Soporte soporte);
-    List<Soporte> obtenerTicketsPorUsuario(Long usuarioId);
-    Soporte actualizarEstado(Long id, String estado);
+    Soporte actualizar(Long id, Soporte soporte);
     void eliminarTicket(Long id);
-    
-    Soporte obtenerPorId(Long id);  
-    void guardar(Soporte soporte);  
+    Optional<Soporte> obtenerPorId(Long id);
 }

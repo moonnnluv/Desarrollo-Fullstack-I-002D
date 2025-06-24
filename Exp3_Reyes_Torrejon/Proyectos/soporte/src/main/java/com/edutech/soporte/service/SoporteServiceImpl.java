@@ -1,8 +1,12 @@
 package com.edutech.soporte.service;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.edutech.soporte.entity.Soporte;
 import com.edutech.soporte.repository.SoporteRepository;
@@ -10,6 +14,7 @@ import com.edutech.soporte.repository.SoporteRepository;
 @Service
 public class SoporteServiceImpl implements SoporteService {
 
+    @Autowired
     private final SoporteRepository soporteRepository;
 
     public SoporteServiceImpl(SoporteRepository soporteRepository) {
@@ -17,36 +22,39 @@ public class SoporteServiceImpl implements SoporteService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<Soporte> obtenerTodos() {
+        return (List<Soporte>) soporteRepository.findAll();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Soporte> obtenerPorId(Long id) {
+        return soporteRepository.findById(id);
+    }
+
+    @Override
+    @Transactional
     public Soporte crearTicket(Soporte soporte) {
-        return soporteRepository.save(soporte);  
+        soporte.setFechaCreacion(LocalDateTime.now());
+        soporte.setEstado("ABIERTO"); 
+        return soporteRepository.save(soporte);
     }
 
     @Override
-    public List<Soporte> obtenerTicketsPorUsuario(Long usuarioId) {
-        return soporteRepository.findByUsuarioId(usuarioId);  
+    @Transactional
+    public Soporte actualizar(Long id, Soporte soporteActualizado) {
+        Soporte soporte = soporteRepository.findById(id).orElseThrow();
+        soporte.setDescripcion(soporteActualizado.getDescripcion());
+        soporte.setEstado(soporteActualizado.getEstado());
+        return soporteRepository.save(soporte);
     }
 
     @Override
-    public Soporte actualizarEstado(Long id, String estado) {
-        Soporte soporte = obtenerPorId(id);  
-        soporte.setEstado(estado);  
-        return soporteRepository.save(soporte);  
-    }
-
-    @Override
+    @Transactional
     public void eliminarTicket(Long id) {
-        Soporte soporte = obtenerPorId(id);  
-        soporteRepository.delete(soporte);  
+        soporteRepository.deleteById(id);
     }
 
-    @Override
-    public Soporte obtenerPorId(Long id) {
-        return soporteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Ticket no encontrado con ID: " + id));  
-    }
-
-    @Override
-    public void guardar(Soporte soporte) {
-        soporteRepository.save(soporte);  
-    }
+    
 }
