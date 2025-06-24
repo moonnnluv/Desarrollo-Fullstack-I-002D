@@ -1,8 +1,11 @@
 package com.edutech.contenido.service;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.edutech.contenido.entity.Contenido;
 import com.edutech.contenido.repository.ContenidoRepository;
@@ -10,6 +13,7 @@ import com.edutech.contenido.repository.ContenidoRepository;
 @Service
 public class ContenidoServiceImpl implements ContenidoService {
 
+    @Autowired
     private final ContenidoRepository contenidoRepository;
 
     public ContenidoServiceImpl(ContenidoRepository contenidoRepository) {
@@ -17,37 +21,36 @@ public class ContenidoServiceImpl implements ContenidoService {
     }
 
     @Override
+    @Transactional
     public Contenido crearContenido(Contenido contenido) {
         return contenidoRepository.save(contenido);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Contenido> obtenerTodosLosContenido() {
-        return contenidoRepository.findAll();
+        return (List<Contenido>) contenidoRepository.findAll();
     }
 
     @Override
-    public Contenido obtenerContenidoPorId(Long id) {
-        return contenidoRepository.findById(id).orElse(null);  
+    @Transactional(readOnly = true)
+    public Optional<Contenido> obtenerContenidoPorId(Long id) {
+        return contenidoRepository.findById(id);
     }
 
     @Override
-    public Contenido actualizarContenido(Long id, Contenido contenido) {
-        Contenido contenidoExistente = obtenerContenidoPorId(id);
-        if (contenidoExistente != null) {
-            contenidoExistente.setNombre(contenido.getNombre());
-            contenidoExistente.setDescripcion(contenido.getDescripcion());
-            contenidoExistente.setTipo(contenido.getTipo());
-            return contenidoRepository.save(contenidoExistente);
-        }
-        return null;  
+    @Transactional
+    public Contenido actualizarContenido(Long id, Contenido contenidoActualizado) {
+        Contenido contenido = contenidoRepository.findById(id).orElseThrow();
+        contenido.setNombre(contenidoActualizado.getNombre());
+        contenido.setDescripcion(contenidoActualizado.getDescripcion());
+        contenido.setTipo(contenidoActualizado.getTipo());
+        return contenidoRepository.save(contenido);
     }
 
     @Override
+    @Transactional
     public void eliminarContenido(Long id) {
-        Contenido contenidoExistente = obtenerContenidoPorId(id);
-        if (contenidoExistente != null) {
-            contenidoRepository.delete(contenidoExistente);
-        }
+        contenidoRepository.deleteById(id);
     }
 }
