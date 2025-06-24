@@ -1,6 +1,9 @@
 package com.edutech.evaluaciones.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class Evaluacion {
@@ -15,16 +18,19 @@ public class Evaluacion {
     private int ponderacion;
     private String estudiante;
 
-    public Evaluacion() {
-    }
-
-    public Evaluacion(String nombre, String curso, double nota, int ponderacion, String estudiante) {
+    public Evaluacion(Long id, String nombre, String curso, double nota, int ponderacion, String estudiante) {
+        this.id = id;
         this.nombre = nombre;
         this.curso = curso;
         this.nota = nota;
         this.ponderacion = ponderacion;
         this.estudiante = estudiante;
     }
+
+
+    public Evaluacion() {
+    }
+
 
     public Long getId() {
         return id;

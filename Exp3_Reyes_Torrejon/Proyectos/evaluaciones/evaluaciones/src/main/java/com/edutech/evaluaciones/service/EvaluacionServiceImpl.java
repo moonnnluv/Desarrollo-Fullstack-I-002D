@@ -1,19 +1,22 @@
 package com.edutech.evaluaciones.service;
 
-import com.edutech.evaluaciones.model.Evaluacion;
-import com.edutech.evaluaciones.repository.EvaluacionRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
+import com.edutech.evaluaciones.model.Evaluacion;
+import com.edutech.evaluaciones.repository.EvaluacionRepository;
 
 @Service
 public class EvaluacionServiceImpl implements EvaluacionService {
 
-    @Autowired
-    private EvaluacionRepository evaluacionRepository;
+    private final EvaluacionRepository evaluacionRepository;
+
+    public EvaluacionServiceImpl(EvaluacionRepository evaluacionRepository) {
+        this.evaluacionRepository = evaluacionRepository;
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -35,15 +38,14 @@ public class EvaluacionServiceImpl implements EvaluacionService {
 
     @Override
     @Transactional
-    public Evaluacion actualizar(Long id, Evaluacion nuevaEvaluacion) {
-        return evaluacionRepository.findById(id).map(e -> {
-            e.setNombre(nuevaEvaluacion.getNombre());
-            e.setCurso(nuevaEvaluacion.getCurso());
-            e.setNota(nuevaEvaluacion.getNota());
-            e.setPonderacion(nuevaEvaluacion.getPonderacion());
-            e.setEstudiante(nuevaEvaluacion.getEstudiante());
-            return evaluacionRepository.save(e);
-        }).orElse(null);
+    public Evaluacion actualizar(Long id, Evaluacion evaluacionActualizada) {
+        Evaluacion evaluacion = evaluacionRepository.findById(id).orElseThrow();
+        evaluacion.setNombre(evaluacionActualizada.getNombre());
+        evaluacion.setCurso(evaluacionActualizada.getCurso());
+        evaluacion.setNota(evaluacionActualizada.getNota());
+        evaluacion.setPonderacion(evaluacionActualizada.getPonderacion());
+        evaluacion.setEstudiante(evaluacionActualizada.getEstudiante());
+        return evaluacionRepository.save(evaluacion);
     }
 
     @Override
