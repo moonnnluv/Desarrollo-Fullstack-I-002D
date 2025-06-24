@@ -10,6 +10,5 @@ public interface PagoService {
     Optional<Pago> findById(Long id);
     Pago save(Pago pago);
     void deleteById(Long id);
-    List<Pago> findByUsuarioId(Long usuarioId); 
-    Pago actualizarEstadoPago(Long id, String nuevoEstado);
+    Pago actualizar(Long id, Pago pago);
 }
