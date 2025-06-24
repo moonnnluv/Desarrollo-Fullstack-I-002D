@@ -50,6 +50,7 @@ public class UsuarioController {
         @ApiResponse(responseCode = "200", description = "Usuario encontrado"),
         @ApiResponse(responseCode = "404", description = "Usuario no encontrado")
     })
+    // MUESTRA LOS USUARIOS POR ID
     @GetMapping("/{id}")
     public ResponseEntity<?> verDetalle (@PathVariable Long id){
         Optional<Usuario> usuarioOptional = usuarioService.obtenerPorId(id);

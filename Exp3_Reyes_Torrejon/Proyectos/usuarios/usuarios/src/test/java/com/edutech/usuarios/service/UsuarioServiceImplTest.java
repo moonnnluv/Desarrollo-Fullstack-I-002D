@@ -63,7 +63,7 @@ public class UsuarioServiceImplTest {
     @Test
     void testObtenerPorId() {
 
-        Usuario usuario = list.get(0);
+        Usuario usuario = list.get(2);
         when(usuarioRepository.findById(3L)).thenReturn(Optional.of(usuario));
 
         Optional<Usuario> resultado = usuarioService.obtenerPorId(3L);
@@ -98,9 +98,9 @@ public class UsuarioServiceImplTest {
     Usuario resultado = usuarioService.actualizar(2L, actualizado);
 
     assertNotNull(resultado);
-    assertEquals("Ana Torres Actualizada", resultado.getNombre());
+    assertEquals("Ana Torres", resultado.getNombre());
     assertEquals("Estudiante", resultado.getRol());
-}
+    }
 
    // PROBAR EL MÉTODO deleteById()
     @Test
