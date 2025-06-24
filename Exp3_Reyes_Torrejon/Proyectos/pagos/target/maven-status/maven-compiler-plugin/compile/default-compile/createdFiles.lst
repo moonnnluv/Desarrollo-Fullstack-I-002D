@@ -1,7 +1,0 @@
-com\edutech\pagos\entity\Pago.class
-com\edutech\pagos\repository\PagoRepository.class
-com\edutech\pagos\config\CorsConfig.class
-com\edutech\pagos\PagosApplication.class
-com\edutech\pagos\service\PagosServiceImpl.class
-com\edutech\pagos\service\PagoService.class
-com\edutech\pagos\controller\PagosController.class
