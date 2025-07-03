@@ -1,0 +1,74 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ContenidoApplication<contenido>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.edutech.contenido.ContenidoApplication",
+            "projectName": "contenido",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-CursosApplication<cursos>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.edutech.cursos.CursosApplication",
+            "projectName": "cursos",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-EvaluacionesApplication<evaluaciones>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.edutech.evaluaciones.EvaluacionesApplication",
+            "projectName": "evaluaciones",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-InscripcionesApplication<inscripciones>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.edutech.inscripciones.InscripcionesApplication",
+            "projectName": "inscripciones",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-PagosApplication<pagos>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.edutech.pagos.PagosApplication",
+            "projectName": "pagos",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-SoporteApplication<soporte>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.edutech.soporte.SoporteApplication",
+            "projectName": "soporte",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-UsuariosApplication<usuarios>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.edutech.usuarios.UsuariosApplication",
+            "projectName": "usuarios",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

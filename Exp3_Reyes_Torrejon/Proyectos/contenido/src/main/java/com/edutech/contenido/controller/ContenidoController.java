@@ -33,7 +33,7 @@ public class ContenidoController {
         this.contenidoService = contenidoService;
     }
 
-    // SWAGGER: LISTAR TODO
+    // SWAGGER: LISTAR 
     @Operation(summary = "Obtener lista de contenidos", description = "Devuelve todos los contenidos registrados")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Lista obtenida exitosamente")
